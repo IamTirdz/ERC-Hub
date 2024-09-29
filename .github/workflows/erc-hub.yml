@@ -5,10 +5,10 @@ on:
     - main
 env:
   AZURE_FUNCTIONAPP_NAME: erc-hub
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: ERC.Hub.Function\.
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: ERC.Hub.Function/
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
-  WORKING_DIRECTORY: src/backend/ERC.Hub.sln
+  WORKING_DIRECTORY: src/backend/ERC.Hub.Function/ERC.Hub.Function.csproj
   DOTNET_CORE_VERSION_INPROC: 8.0.x
 jobs:
   build:

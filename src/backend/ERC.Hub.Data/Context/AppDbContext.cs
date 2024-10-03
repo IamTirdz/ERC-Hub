@@ -52,6 +52,8 @@ namespace ERC.Hub.Data.Context
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
+        public DbSet<AuditTrail> AuditTrails { get; set; }
+
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<Department> Departments { get; set; }

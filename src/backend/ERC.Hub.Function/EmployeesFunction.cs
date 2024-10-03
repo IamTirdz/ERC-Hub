@@ -1,11 +1,13 @@
 using ERC.Hub.Business.Common.Models;
 using ERC.Hub.Business.Employees.Commands;
+using ERC.Hub.Business.Employees.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.Net;
 
@@ -26,6 +28,19 @@ namespace ERC.Hub.Function
 
             var response = await mediator.Send(new CreateEmployeeCommand(model));
             return new CreatedResult($"employees/{response}", response);
+        }
+
+        [Function("GetEmployees")]
+        [OpenApiOperation(operationId: "GetEmployees", tags: new[] { "Employees" })]
+        [OpenApiParameter(name: "pageNumber", In = ParameterLocation.Query, Required = false, Type = typeof(int?), Description = "Page number for pagination, default is 1")]
+        [OpenApiParameter(name: "pageSize", In = ParameterLocation.Query, Required = false, Type = typeof(int?), Description = "Page size for pagination, default is 10")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(PaginatedResponse<EmployeeDto>), Description = "Success")]
+        public async Task<IActionResult> GetAll([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "employees")] HttpRequest req,
+            int? pageNumber = 1,
+            int? pageSize = 10)
+        {
+            var response = await mediator.Send(new GetEmployeeQuery(pageNumber!.Value, pageSize!.Value));
+            return new OkObjectResult(response);
         }
     }
 }

@@ -4,6 +4,7 @@ using ERC.Hub.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERC.Hub.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241003035332_AddAuditTrail")]
+    partial class AddAuditTrail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,7 +67,7 @@ namespace ERC.Hub.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AuditTrail", (string)null);
+                    b.ToTable("AuditTrail");
                 });
 
             modelBuilder.Entity("ERC.Hub.Data.Models.Department", b =>
@@ -95,7 +98,7 @@ namespace ERC.Hub.Data.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("ERC.Hub.Data.Models.Employee", b =>
@@ -166,7 +169,7 @@ namespace ERC.Hub.Data.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("Employee", (string)null);
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("ERC.Hub.Data.Models.Position", b =>
@@ -192,7 +195,7 @@ namespace ERC.Hub.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Position", (string)null);
+                    b.ToTable("Position");
                 });
 
             modelBuilder.Entity("ERC.Hub.Data.Models.AuditTrail", b =>
